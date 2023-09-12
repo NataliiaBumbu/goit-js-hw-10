@@ -20,18 +20,20 @@ let arrBreedsId = [];
 
 fetchBreeds()
 .then(data => {
-    // data.forEach(element => {
-    //     arrBreedsId.push({text: element.name, value: element.id});
-    // });
-    selector.innerHTML = data
-    .map(item => {
-        return `<option value="${item.id}">${item.name}</option>`
-    })
-    .join('');
-
+    const selectCat = data
+    .map(item => (
+      {  value: item.id,
+        text: item.name,
+        }
+       
+    ));
+  
+    // if (text === item.name) {
+    //     arrBreedsId.push({text: item.name, value: item.id});
+    //   }
     new SlimSelect({
-        select: selector,
-        data: arrBreedsId
+        select: ref.selector,
+        data: selectCat,
     });
     })
 .catch(onFetchError);
