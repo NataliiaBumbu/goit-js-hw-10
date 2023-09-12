@@ -1,5 +1,5 @@
 import { fetchBreeds, fetchCatByBreed } from "./cat";
-import './styles.css';
+import '../css/styles.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SlimSelect from 'slim-select'
 import 'slim-select/dist/slimselect.css';
@@ -17,11 +17,18 @@ error.classList.add('is-hidden');
 divCatInfo.classList.add('is-hidden');
 
 let arrBreedsId = [];
+
 fetchBreeds()
 .then(data => {
-    data.forEach(element => {
-        arrBreedsId.push({text: element.name, value: element.id});
-    });
+    // data.forEach(element => {
+    //     arrBreedsId.push({text: element.name, value: element.id});
+    // });
+    selector.innerHTML = data
+    .map(item => {
+        return `<option value="${item.id}">${item.name}</option>`
+    })
+    .join('');
+
     new SlimSelect({
         select: selector,
         data: arrBreedsId
@@ -30,6 +37,7 @@ fetchBreeds()
 .catch(onFetchError);
 
 selector.addEventListener('change', onSelectBreed);
+
 
 function onSelectBreed(event) {
     loader.classList.replace('is-hidden', 'loader');
@@ -49,9 +57,10 @@ function onSelectBreed(event) {
     .catch(onFetchError);
 };
 
-function onFetchError(error) {
+function onFetchError(err) {
     selector.classList.remove('is-hidden');
     loader.classList.replace('loader', 'is-hidden');
+    error.classList.remove('is-hidden')
 
     Notify.failure('Oops! Something went wrong! Try reloading the page or select another cat breed!', {
         position: 'center-center',
@@ -59,6 +68,7 @@ function onFetchError(error) {
         width: '400px',
         fontSize: '24px'
     });
+ 
 };
    
 
