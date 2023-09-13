@@ -16,21 +16,24 @@ loader.classList.replace('loader', 'is-hidden');
 error.classList.add('is-hidden');
 divCatInfo.classList.add('is-hidden');
 
+
 let arrBreedsId = [];
+
 
 fetchBreeds()
 .then(data => {
-    const selectCat = data
+
+    //  {
+    //     arrBreedsId.push({text: item.name, value: item.id});
+    //   } 
+ const selectCat = data
     .map(item => (
       {  value: item.id,
         text: item.name,
         }
-       
-    ));
+        ));
   
-    // if (text === item.name) {
-    //     arrBreedsId.push({text: item.name, value: item.id});
-    //   }
+    
     new SlimSelect({
         select: ref.selector,
         data: selectCat,
